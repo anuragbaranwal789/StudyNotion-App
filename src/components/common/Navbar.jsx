@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from "react"
-import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai"
+import { AiOutlineShoppingCart } from "react-icons/ai"
 import { BsChevronDown } from "react-icons/bs"
 import { useSelector } from "react-redux"
 import { Link, matchPath, useLocation } from "react-router-dom"
@@ -11,6 +11,7 @@ import { apiConnector } from "../../services/apiConnector"
 import { categories } from "../../services/apis"
 import { ACCOUNT_TYPE } from "../../utils/constants"
 import ProfileDropdown from "../core/Auth/ProfileDropdown"
+import MobileNav from '../core/Navbar/MobileNav'
 
 // const subLinks = [
 //   {
@@ -134,9 +135,12 @@ const Navbar = () => {
           )}
           {token !== null && <ProfileDropdown />}
         </div>
-        <button className="mr-4 md:hidden">
-          <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
-        </button>
+        <MobileNav 
+          NavbarLinks={NavbarLinks}
+          matchRoute={matchRoute}
+          subLinks={subLinks}
+          loading={loading}
+        />
       </div>
     </div>
   )
