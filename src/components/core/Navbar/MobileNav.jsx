@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BsChevronDown } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const MobileNav = ({ NavbarLinks, matchRoute, subLinks, loading }) => {
+const MobileNav = ({ NavbarLinks, matchRoute, subLinks, loading, user, totalItems }) => {
+  const { token } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
-  
+
   return (
     <div className="md:hidden relative z-[1000]">
       <AnimatePresence>
@@ -28,6 +30,24 @@ const MobileNav = ({ NavbarLinks, matchRoute, subLinks, loading }) => {
               className="fixed right-0 top-14 w-full bg-richblack-900 z-[999] max-h-[calc(100vh-3.5rem)] overflow-y-auto"
             >
               <nav className="flex flex-col w-full">
+                {token === null && (
+                  <>
+                    <Link
+                      to="/login"
+                      className="block p-4 text-richblack-25 border-b border-richblack-700 hover:bg-richblack-700"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Log in
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className="block p-4 text-richblack-25 border-b border-richblack-700 hover:bg-richblack-700"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Sign up
+                    </Link>
+                  </>
+                )}
                 {NavbarLinks.map((link, index) => (
                   <div key={index} className="border-b border-richblack-700 last:border-none">
                     {link.title === "Catalog" ? (
