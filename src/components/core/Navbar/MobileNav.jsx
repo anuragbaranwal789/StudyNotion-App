@@ -2,11 +2,15 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BsChevronDown } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { logout } from '../../../services/operations/authAPI';
 
 const MobileNav = ({ NavbarLinks, matchRoute, subLinks, loading, user, totalItems }) => {
   const { token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
 
@@ -46,6 +50,26 @@ const MobileNav = ({ NavbarLinks, matchRoute, subLinks, loading, user, totalItem
                     >
                       Sign up
                     </Link>
+                  </>
+                )}
+                {token !== null && (
+                  <>
+                    <Link
+                      to="/dashboard/my-profile"
+                      className="block p-4 text-richblack-25 border-b border-richblack-700 hover:bg-richblack-700"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Dashboard
+                    </Link>
+                    <div
+                      onClick={() => {
+                        dispatch(logout(navigate))
+                        setIsOpen(false)
+                      }}
+                      className="block p-4 text-richblack-25 border-b border-richblack-700 hover:bg-richblack-700"
+                    >
+                      Logout
+                    </div>
                   </>
                 )}
                 {NavbarLinks.map((link, index) => (
